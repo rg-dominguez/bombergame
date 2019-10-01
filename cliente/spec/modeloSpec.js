@@ -41,7 +41,29 @@ describe("Bombergame", function() {
     expect(Object.keys(juego.partidas["unapepe"].jugadores).length).toEqual(2);
   })
 
+  it("pepe sale de una partida con dos jugadores", function(){
+    juego.agregarUsuario('pepe');
+    juego.agregarUsuario('ana');
+    juego.crearPartida('una', 'pepe');
+    var partida = juego.partidas["unapepe"];
+    juego.unirseAPartida('ana', 'unapepe');
+    expect(partida).not.toBe(undefined);
+    expect(partida.idp).toBe("unapepe");
+    expect(Object.keys(partida.jugadores).length).toEqual(2);
+    juego.partidas["unapepe"].salir("pepe");
+    expect(Object.keys(partida.jugadores).length).toEqual(1);
+  })
 
+  /*it("pepe sale de la partida unapepe siendo el ultimo jugador", function(){
+    juego.agregarUsuario('pepe');
+    juego.crearPartida('una', 'pepe');
+    var partida = juego.partidas["unapepe"];
+    expect(Object.keys(partida.jugadores).length).toEqual(1);
+    expect(juego.partidas["unapepe"]).not.toBe(undefined);
+    expect(juego.partidas["unapepe"].idp).toBe("unapepe");
+    juego.partidas["unapepe"].salir("pepe");
+    expect(juego.partidas["unapepe"]).toBe(undefined);
+  })*/
 
 
 });
