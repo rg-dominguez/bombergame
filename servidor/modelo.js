@@ -1,30 +1,50 @@
  
 function Juego(){
-	this.partidas=[];
-	this.usuarios=[];
+	this.partidas={};
+	this.usuarios={};
 
-	this.crearPartida=function(nombre, nick){
+	this.crearPartida=function(nombre, nick, callback){
 		var idp=nombre+nick;
+		var partida;
 		if (!this.partidas[idp]){
-			this.partidas[idp]=new Partida(nombre,idp);
-			this.partidas[idp].agregarJugador(this.usuarios[nick]);
-		}		
+			partida=new Partida(nombre,idp);
+			partida.agregarJugador(this.usuarios[nick]);
+			this.partidas[idp]=partida;
+		}
+		else {
+			partida=this.partidas[idp];
+		}
+
+		callback(this.partidas[idp]);		
 	}
 
-	this.agregarUsuario=function(nombre){
+	this.agregarUsuario=function(nombre, callback){
 		if(!this.usuarios[nombre]){
+			console.log("Nuevo usuario "+nombre);
 			this.usuarios[nombre]=new Usuario(nombre);
 		}
+
+		callback(this.usuarios[nombre]);
 	}
 
-	this.obtenerPartidas=function(){
-		return this.partidas;
+	this.obtenerPartidas=function(callback){
+		callback(this.partidas);
+		//return this.partidas;
+	}
+
+	this.obtenerUsuarios=function(callback){
+		callback(this.usuarios);
+		//return this.usuarios;
 	}
 
 	this.unirseAPartida=function(nombre, idp){
-		if (this.partidas[idp] && this.usuarios[nombre]) {
-			this.partidas[idp].agregarJugador(this.usuarios[nombre]);
+		var partida=this.partidas[idp];
+
+		if (partida && this.usuarios[nombre]) {
+			partida.agregarJugador(this.usuarios[nombre]);
 		}
+
+		return partida;
 	}
 
 	this.salir=function(nombrePartida,nick){
@@ -42,6 +62,11 @@ function Juego(){
 		delete this.partidas[nombrePartida];
 	}
 
+	this.obtenerJugadores=function(nombrePartida, callback){
+		callback(this.partidas[nombrePartida].devolverJugadores());
+		//return Object.keys(this.partidas[nombrePartida].devolverJugadores());
+	}
+
 }
 
 
@@ -49,7 +74,7 @@ function Juego(){
 function Partida(nombre,idp){
 	this.nombre=nombre;
 	this.idp=idp;
-	this.jugadores=[];
+	this.jugadores={};
 	this.fase=new Inicial();
 
 	this.agregarJugador=function(usr){
@@ -62,6 +87,10 @@ function Partida(nombre,idp){
 
 	this.salir=function(nick){
 		delete this.jugadores[nick];
+	}
+
+	this.devolverJugadores=function(){
+		return this.jugadores;
 	}
 }
 
@@ -95,3 +124,5 @@ function Usuario(nick){
 	this.nick=nick;
 	this.id=undefined;
 }
+
+module.exports.Juego=Juego;

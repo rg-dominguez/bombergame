@@ -1,21 +1,26 @@
+var modelo=require("./modelo.js")
+
+
 describe("Bombergame", function() {
   var juego;
 
   beforeEach(function() {
-    juego = new Juego();
+    juego = new modelo.Juego();
   });
 
   it("comprobaciones iniciales", function() {
-    expect(juego.usuarios.length).toEqual(0);
-    expect(juego.partidas.length).toEqual(0);
+    expect(Object.keys(juego.usuarios).length).toEqual(0);
+    expect(Object.keys(juego.partidas).length).toEqual(0);
     
   });
 
   it("Comprobar agregar usuarios", function(){
-    juego.agregarUsuario('pepe');
-    expect(Object.keys(juego.usuarios).length).toEqual(1);
-    expect(juego.usuarios["pepe"]).not.toBe(undefined);
-    expect(juego.usuarios["pepe"].nick).toBe("pepe");
+    juego.agregarUsuario('pepe', function(){
+      expect(Object.keys(juego.usuarios).length).toEqual(1);
+      expect(juego.usuarios["pepe"]).not.toBe(undefined);
+      expect(juego.usuarios["pepe"].nick).toBe("pepe");      
+    });
+
   })
 
   it("no se duplican usuarios con el mismo nombre", function(){
