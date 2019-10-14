@@ -3,7 +3,7 @@ function ClienteRest(){
 	this.agregarUsuario=function(nick){
 		$.getJSON("/agregarUsuario/"+nick,function(data){    
             console.log(data);
-            //mostrarListaPartidas(data);
+            mostrarUsuario(data);
         });
     }
 
@@ -45,3 +45,4 @@ function ClienteRest(){
 
 
 }
+
