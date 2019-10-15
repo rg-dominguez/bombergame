@@ -10,21 +10,24 @@ function Juego(){
 			partida=new Partida(nombre,idp);
 			partida.agregarJugador(this.usuarios[nick]);
 			this.partidas[idp]=partida;
+			callback(this.partidas[idp]);
 		}
 		else {
-			partida=this.partidas[idp];
-		}
-
-		callback(this.partidas[idp]);		
+			callback({idp:""});
+		}		
 	}
 
 	this.agregarUsuario=function(nombre, callback){
 		if(!this.usuarios[nombre]){
 			console.log("Nuevo usuario "+nombre);
 			this.usuarios[nombre]=new Usuario(nombre);
+			callback(this.usuarios[nombre]);
+		}
+		else{
+			callback({nick:""});
 		}
 
-		callback(this.usuarios[nombre]);
+		
 	}
 
 	this.obtenerPartidas=function(callback){

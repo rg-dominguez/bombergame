@@ -3,14 +3,21 @@ function ClienteRest(){
 	this.agregarUsuario=function(nick){
 		$.getJSON("/agregarUsuario/"+nick,function(data){    
             console.log(data);
-            mostrarUsuario(data);
+            if(data.nick!=""){
+                mostrarUsuario(data);
+            }
+            else{
+                mostrarAviso("nick ya existe");
+            }
         });
     }
 
     this.crearPartida=function(nombre, nick){
 		$.getJSON("/crearPartida/"+nombre+"/"+nick,function(data){    
             console.log(data);
-            //mostrarListaPartidas(data);
+            if(data.idp==""){
+                mostrarAvisoPartidaCreada("Esa partida ya existe, elige otro nombre");
+            }
         });
     }
 

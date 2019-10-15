@@ -18,12 +18,63 @@ function mostrarAgregarUsuario(){
      });
 }
 
-function mostrarUsuario(){
+function mostrarUsuario(data){
 	$('#mAU').remove();
+
+    var cadena="<div id='bienvenida'>";
+    cadena=cadena+"<label>Bienvenido/a, </label>" + " " + data.nick;
+    cadena=cadena+"</div>";    
+    $('#bienvenida').append(cadena);    
+
+    mostrarCrearPartida(data);
+    mostrarBotonUnirse(data);
 }
 
 
+function mostrarCrearPartida(data){
+
+    var cadena="<div id='bienvenida'>";
+    cadena=cadena+'<input id="nombrePartida" type="text" class="form-control" name="nombrePartida" placeholder="Nombre Partida">';
+    cadena=cadena+'<button type="button" id="crearParBtn" class="btn btn-primary btn-md">Crear Partida</button>';
+    cadena=cadena+"</div>";
+
+    $('#bienvenida').append(cadena);
+
+    $('#crearParBtn').on('click',function(){
+        var nombrePartida=$('#nombrePartida').val();
+        if (nombrePartida==""){
+            nombrePartida="NewGame";
+        }
+        rest.crearPartida(nombrePartida, data.nick);
+     });
+}
+
+function mostrarBotonUnirse(data){
+    var cadena="<div id='bienvenida'>";
+    cadena=cadena+'<button type="button" id="unirParBtn" class="btn btn-primary btn-md">Unirse a partida</button>';
+    cadena=cadena+"</div>";
+
+    $('#bienvenida').append(cadena);
+
+    $('#unirParBtn').on('click',function(){
+        $('#bienvenida').remove();
+        mostrarPartidasUnirse(data);
+     });
+
+}
 
 
+function mostrarPartida(data){
+
+}
+
+
+function mostrarAviso(msg){
+    alert(msg);
+}
+
+function mostrarAvisoPartidaCreada(msg){
+    alert(msg);
+}
 
 
