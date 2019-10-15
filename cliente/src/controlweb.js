@@ -58,8 +58,43 @@ function mostrarBotonUnirse(data){
 
     $('#unirParBtn').on('click',function(){
         $('#bienvenida').remove();
-        mostrarPartidasUnirse(data);
+        rest.obtenerPartidas();
      });
+
+
+
+}
+
+function mostrarPartidasUnirse(data){
+    var cadena="<div id='partidas'>";
+    cadena=cadena+"<label>Partidas a las que puedes unirte:</label>"
+
+    cadena+='<table class="table">'
+    cadena+="<thead>"
+    cadena+="<tr>"
+    cadena+='<th scope="col">Nombre de partida</th>'
+    cadena+='<th scope="col">Nº de jugadores</th>'
+    cadena+='<th scope="col">Unirse</th>'
+    cadena+='</tr>'
+    cadena+='</thead>'
+    cadena+='<tbody>'
+    for (var key in data) {
+        cadena+='<tr>'
+        //cadena+='<th scope="row">'+key+'</th>'
+        cadena+='<td>'+data[key].idp+'</td>'
+        cadena+='<td>'+Object.keys(data[key].jugadores).length+'</td>'
+        cadena+='<td>'+'<button type="button" id="unirseAPartidaBtn" class="btn btn-primary btn-md">Unirme</button>'+'</td>'
+        cadena+='</tr>'
+
+    }
+        
+    cadena+='</tbody>'
+    cadena+='</table>'
+    cadena=cadena+"</div>";
+
+    $('#partidas').append(cadena);
+
+    
 
 }
 

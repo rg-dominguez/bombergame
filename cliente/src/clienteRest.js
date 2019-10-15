@@ -31,7 +31,7 @@ function ClienteRest(){
     this.obtenerPartidas=function(){
 		$.getJSON("/obtenerPartidas",function(data){    
             console.log(data);
-            //mostrarListaPartidas(data);
+            mostrarPartidasUnirse(data);
         });
     }
 
